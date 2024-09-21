@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+      .signup-form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      label,
+      input {
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+      #password-strength {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-form">
+      <h2>Sign Up</h2>
+      <form id="signup-form">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          oninput="checkPasswordStrength()"
+        />
+
+        <div id="password-strength"></div>
+
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <script>
+      function checkPasswordStrength() {
+        const password = document.getElementById("password").value;
+        const strengthElement = document.getElementById("password-strength");
+
+        // Clear the message when the password field is empty
+        if (password.length === 0) {
+          strengthElement.textContent = "";
+          return;
+        }
+
+        let strengthMessage = "Not very mindful";
+
+        // Regex Patterns for different levels
+        const veryStrongPattern =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
+        const strongPattern =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+        const goodPattern = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/;
+
+        if (veryStrongPattern.test(password)) {
+          strengthMessage = "Very mindful, very demure";
+        } else if (strongPattern.test(password)) {
+          strengthMessage = "Very demure";
+        } else if (goodPattern.test(password)) {
+          strengthMessage = "Very mindful";
+        } else {
+          strengthMessage = "Not very mindful";
+        }
+
+        strengthElement.textContent = strengthMessage;
+      }
+    </script>
+  </body>
+</html>
